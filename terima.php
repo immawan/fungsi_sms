@@ -18,14 +18,24 @@ if (substr($nopengirim, 0, 3) == "+62") {
 $pesan = strtoupper(trim($_GET['pesan']));
 
 koneksi();
-
 insertInbox($nopengirim, $pesan);
 
-if($pesan == "TES SMS") {
-	$pesanKirim = "Tes+Berhasil";
-	trigger($nopengirim, $pesanKirim);
+$userid = selectUser($nopengirim);
+
+if ($userid != NULL) {
+	$pengirim = $userid;
+	koneksi();
+	$namauser = selectNamaUser($pengirim);
+	if($pesan=="TES SMS") {
+		$pesanKirim = "Sms+Anda+Berhasil,+".changeSpaceToPlus($namauser);
+		trigger($nopengirim, $pesanKirim);
+	} else {
+		$pesanKirim = "Format+SMS+Anda+salah,+".changeSpaceToPlus($namauser);
+		trigger($nopengirim, $pesanKirim);
+	}
+	
 } else {
-	$pesanKirim = "Ngapain+Loe+Bro";
+	$pesanKirim = "Maaf,+nomor+Anda+tidak+terdaftar+di+Database+kami.";
 	trigger($nopengirim, $pesanKirim);
 }
 

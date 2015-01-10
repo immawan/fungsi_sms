@@ -13,4 +13,19 @@ function insertInbox($pengirim, $pesan) {
     mysql_query("INSERT INTO inbox VALUES('',curdate(),curtime(),'$pengirim','$pesan')");
 }
 
+function selectUser($nopengirim) {
+	$user = mysql_query("SELECT iduser FROM user_sms WHERE nohp = '$nopengirim'");
+	if (!$user) {
+		return NULL;
+	}
+	$hasiluser = mysql_fetch_array($user);
+	return $hasiluser[0];
+}
+
+function selectNamaUser($iduser) {
+	$nama = mysql_query("SELECT nama FROM user_sms WHERE iduser = '$iduser'");
+	$hasilnama = mysql_fetch_array($nama);
+	return $hasilnama[0];
+}
+
 ?>
