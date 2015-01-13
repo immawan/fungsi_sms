@@ -23,17 +23,15 @@ insertInbox($nopengirim, $pesan);
 $userid = selectUser($nopengirim);
 
 if ($userid != NULL) {
-	$pengirim = $userid;
 	koneksi();
-	$namauser = selectNamaUser($pengirim);
+	$namauser = selectNamaUser($userid);
 	if($pesan=="TES SMS") {
 		$pesanKirim = "Sms+Anda+Berhasil,+".changeSpaceToPlus($namauser);
 		trigger($nopengirim, $pesanKirim);
 	} else {
 		$pesanKirim = "Format+SMS+Anda+salah,+".changeSpaceToPlus($namauser);
 		trigger($nopengirim, $pesanKirim);
-	}
-	
+	}	
 } else {
 	$pesanKirim = "Maaf,+nomor+Anda+tidak+terdaftar+di+Database+kami.";
 	trigger($nopengirim, $pesanKirim);
