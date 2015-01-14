@@ -25,9 +25,14 @@ $userid = selectUser($nopengirim);
 if ($userid != NULL) {
 	koneksi();
 	$namauser = selectNamaUser($userid);
-	if($pesan=="TES SMS") {
-		$pesanKirim = "Sms+Anda+Berhasil,+".changeSpaceToPlus($namauser);
-		trigger($nopengirim, $pesanKirim);
+	if(substr($pesan, 0, 3)=="TES") {
+		if(substr($pesan, 4, 3)=="SMS") {
+			$pesanKirim = "Tes+Sms+Berhasil,+".changeSpaceToPlus($namauser);
+			trigger($nopengirim, $pesanKirim);
+		} else {
+			$pesanKirim = "Sms+Berhasil+dikirim,+".changeSpaceToPlus($namauser);
+			trigger($nopengirim, $pesanKirim);
+		}
 	} else {
 		$pesanKirim = "Format+SMS+Anda+salah,+".changeSpaceToPlus($namauser);
 		trigger($nopengirim, $pesanKirim);
